@@ -39,6 +39,7 @@
             {brand : 'Peugeot', make : '508'},
         ];
         
+        // Méthode Perso
         $('#cars').append('<optgroup label="Citroën">');
         $('#cars').append('<optgroup label="Peugeot">');
         $('#cars').append('<optgroup label="Renault">');
@@ -55,6 +56,7 @@
             };
         }
 
+        // Méthode de Khalid
         let sortOfCars = {};
         let optgroupTemplate = 
 
@@ -62,14 +64,15 @@
             if(sortOfCars[car.brand] === undefined){
                 sortOfCars[car.brand] = [];
             }
-            sortOfCars[car.brand].push(car.make);
+            sortOfCars[car.brand].push(car);
         });
 
         Object.keys(sortOfCars).forEach(brand => {
-            $('select').append(`<optgroup label='${brand}></optgroup>`);
+            $('select').append(`<optgroup label='${brand}'></optgroup>`);
+
             sortOfCars[brand].forEach(car => {
                 $(`optgroup[label=${brand}]`).append(
-                    `<options value='${car.make}'>${car.make}</options>`
+                    `<option value='${car.make}'>${car.make}</option>`
                 )
             })
         })
