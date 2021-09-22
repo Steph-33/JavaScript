@@ -15,9 +15,10 @@
         </div>
 
         <div>
-            <label for="dob">Date of Birth</label>
-            <select name="dob" id="dob">
-                <!-- 1980 - 2001 -->
+            <label for="cars">Cars</label>
+            <select name="cars" id="cars">
+                <!-- Afficher les voitures ici -->
+                <!-- Que les voitures soient groupées par marque -->
             </select>
         </div>
 
@@ -27,18 +28,51 @@
     </form>
     <script src="jquery-3.6.0.js"></script>
     <script>
-        let template = `
-        <div>
-            <label for="name">Age</label>
-            <input type="text" name="age" id="age">
-        </div>
-        `;
-        $('#name').parent().after(template);
+        const cars = [
+            {brand : 'Peugeot', make : '208'},
+            {brand : 'Renault', make : 'Clio'},
+            {brand : 'Citroën', make : 'C3'},
+            {brand : 'Peugeot', make : '3008'},
+            {brand : 'Citroën', make : 'C4'},
+            {brand : 'Peugeot', make : '308'},
+            {brand : 'Peugeot', make : '5008'},
+            {brand : 'Peugeot', make : '508'},
+        ];
+        
+        $('#cars').append('<optgroup label="Citroën">');
+        $('#cars').append('<optgroup label="Peugeot">');
+        $('#cars').append('<optgroup label="Renault">');
 
-        for(let i = 1980 ; i <= 2001 ; i++){
-            $('#dob').append(`<option value="${i}">${i}</option>`);
+        for(let i = 0 ; i < cars.length ; i++){
+            if(cars[i].brand === 'Citroën'){
+                $('optgroup[label="Citroën"]').append(`<option value="${cars[i].make}">${cars[i].make}</option>`);
+            };
+            if(cars[i].brand === 'Peugeot'){
+                $('optgroup[label="Peugeot"]').append(`<option value="${cars[i].make}">${cars[i].make}</option>`);            
+            } 
+            if(cars[i].brand === 'Renault'){
+                $('optgroup[label="Renault"]').append(`<option value="${cars[i].make}">${cars[i].make}</option>`);
+            };
         }
-        console.log(dob);
+
+        let sortOfCars = {};
+        let optgroupTemplate = 
+
+        cars.forEach(car => {
+            if(sortOfCars[car.brand] === undefined){
+                sortOfCars[car.brand] = [];
+            }
+            sortOfCars[car.brand].push(car.make);
+        });
+
+        Object.keys(sortOfCars).forEach(brand => {
+            $('select').append(`<optgroup label='${brand}></optgroup>`);
+            sortOfCars[brand].forEach(car => {
+                $(`optgroup[label=${brand}]`).append(
+                    `<options value='${car.make}'>${car.make}</options>`
+                )
+            })
+        })
     </script>
 </body>
 </html>
