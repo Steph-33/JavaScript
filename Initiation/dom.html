@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+   
+</head>
+<body>
+    <form>
+        <div>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
+        </div>
+
+        <div>
+            <label for="dob">Date of Birth</label>
+            <select name="dob" id="dob">
+                <!-- 1980 - 2001 -->
+            </select>
+        </div>
+
+        <div>
+            <input type="submit" name="person">
+        </div>
+    </form>
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        let template = `
+        <div>
+            <label for="name">Age</label>
+            <input type="text" name="age" id="age">
+        </div>
+        `;
+        $('#name').parent().after(template);
+
+        for(let i = 1980 ; i <= 2001 ; i++){
+            $('#dob').append(`<option value="${i}">${i}</option>`);
+        }
+        console.log(dob);
+    </script>
+</body>
+</html>
