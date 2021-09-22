@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correction 2</title>
+</head>
+<body>
+    <script>
+        // Trouver le meilleur candidat pour un projet PHP sachant que exp 5 mettrait 35 jours (21000), exp 8 mettrait 20 jours (16000) et exp 2 mettrait 50 jours (25000).
+        let persons = {
+           "moussa" : {
+               name : 'Moussa', 
+               job : 'developer', 
+               'technologies' : ['html', 'css', 'javascript','php'],
+               cost : 600,
+               experience : 5
+            },
+            "khalid" : {
+                name : 'Khalid', 
+                job : 'developer', 
+                'technologies' : ['php', 'nodejs', 'java'],
+                cost : 800,
+                experience : 8
+            },
+            "maha" : {
+                name : 'Maha', 
+                job : 'developer', 
+                'technologies' : ['php', 'angular', 'java', 'javascript'],
+                cost : 500,
+                experience : 2
+            },
+       };
+       
+       let candidates = Object.keys(persons);
+       console.log(candidates);
+
+       let getBestCandidate = (technology) => {
+           let developers = [];
+           let bestCandidateCost = 0;
+           let bestCandidate = null;
+
+           Object.keys(persons).forEach(id => {
+               if(persons[id].technologies.includes(technology)){
+                   developers.push(persons[id]);
+                   
+                   let numberOfDays = 0;
+                   switch (persons[id].experience) {
+                       case 5: 
+                           numberOfDays = 35
+                           break;
+                        case 8: 
+                           numberOfDays = 20
+                           break;
+                        case 2:
+                           numberOfDays = 50
+                           break;
+                       default:
+                           console.error('Wrong experience');
+                           break;
+                   }
+                   persons[id].totalCost = persons[id].cost*numberOfDays;
+               }
+           })
+
+           developers.forEach((developer, iteration)=>{
+               if(iteration === 0){
+                   bestCandidateCost = developers[0].totalCost;
+                   bestCandidate = developer;
+               }
+               if(developer.totalCost < bestCandidateCost){
+                   bestCandidateCost = developers[iteration].totalCost;
+                   bestCandidate = developer;
+               }
+           });
+           console.log(bestCandidate);
+       }
+
+       getBestCandidate('php');
+    </script>
+</body>
+</html>
