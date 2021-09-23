@@ -15,10 +15,23 @@
         </div>
 
         <div>
+            <label for="portes-2">Nombre de Portes
+                2 : <input type="radio" name="portes" id="portes-2" value="2">
+            </label>
+            <label for="portes-4">Nombre de Portes
+                4 : <input type="radio" name="portes" id="portes-4" value="4">
+            </label>
+        </div>
+
+        <div>
             <label for="cars">Cars</label>
             <select name="cars" id="cars">
                 <!-- Afficher les voitures ici -->
                 <!-- Que les voitures soient groupées par marque -->
+                <!-- Si je coche le bouton 2, n'afficher que les voitures à 2 portes -->
+                <!-- Sinon afficher les autres -->
+                <!-- Afficher une option null par défaut avec "Choisir un Véhicule" -->
+                <!-- Quand l'option null est sélectionnée, mettre le background du select en rouge -->
             </select>
         </div>
 
@@ -28,54 +41,62 @@
     </form>
     <script src="jquery-3.6.0.js"></script>
     <script>
+        
         const cars = [
-            {brand : 'Peugeot', make : '208'},
-            {brand : 'Renault', make : 'Clio'},
-            {brand : 'Citroën', make : 'C3'},
-            {brand : 'Peugeot', make : '3008'},
-            {brand : 'Citroën', make : 'C4'},
-            {brand : 'Peugeot', make : '308'},
-            {brand : 'Peugeot', make : '5008'},
-            {brand : 'Peugeot', make : '508'},
+            {brand : 'Peugeot', make : '208', portes : 2},
+            {brand : 'Renault', make : 'Clio', portes : 2},
+            {brand : 'Citroën', make : 'C3', portes : 2},
+            {brand : 'Peugeot', make : '3008', portes : 5},
+            {brand : 'Citroën', make : 'C4', portes : 4},
+            {brand : 'Peugeot', make : '308', portes : 4},
+            {brand : 'Peugeot', make : '5008', portes : 5},
+            {brand : 'Peugeot', make : '508', portes : 4},
         ];
         
-        // Méthode Perso
-        $('#cars').append('<optgroup label="Citroën">');
-        $('#cars').append('<optgroup label="Peugeot">');
-        $('#cars').append('<optgroup label="Renault">');
+        let getCarsList = function(portes){
+            $('select').prepend(`<option value='' selected=selected>Choisir un Véhicule</option>`);
 
-        for(let i = 0 ; i < cars.length ; i++){
-            if(cars[i].brand === 'Citroën'){
-                $('optgroup[label="Citroën"]').append(`<option value="${cars[i].make}">${cars[i].make}</option>`);
-            };
-            if(cars[i].brand === 'Peugeot'){
-                $('optgroup[label="Peugeot"]').append(`<option value="${cars[i].make}">${cars[i].make}</option>`);            
-            } 
-            if(cars[i].brand === 'Renault'){
-                $('optgroup[label="Renault"]').append(`<option value="${cars[i].make}">${cars[i].make}</option>`);
-            };
+            let sortOfCars = {};
+
+            let filteredCars = cars.filter(car => {
+                if(portes === undefined){return true}
+                if(parseInt(portes) === 2){return car.portes === 2}
+                return car.portes !==2;
+            });
+
+            filteredCars.forEach(car => {
+                if(sortOfCars[car.brand] === undefined){
+                    sortOfCars[car.brand] = [];
+                }
+                sortOfCars[car.brand].push(car);
+            });
+
+            Object.keys(sortOfCars).forEach(brand => {
+                $('select').append(`<optgroup label='${brand}'></optgroup>`);
+                
+                sortOfCars[brand].forEach(car => {
+                    $(`optgroup[label=${brand}]`).append(
+                        `<option value='${car.make}'>${car.make}</option>`
+                    )
+                })
+                
+            })
         }
 
-        // Méthode de Khalid
-        let sortOfCars = {};
-        let optgroupTemplate = 
+        let setSelectedBackground = function(){
+            $('select').css('background', $('select').val() === '' ? 'red' : 'transparent')
+        }
 
-        cars.forEach(car => {
-            if(sortOfCars[car.brand] === undefined){
-                sortOfCars[car.brand] = [];
-            }
-            sortOfCars[car.brand].push(car);
+        $('input[name=portes]').on('change', function(event){   
+            $('select').html('');
+            getCarsList($(this).val());
         });
 
-        Object.keys(sortOfCars).forEach(brand => {
-            $('select').append(`<optgroup label='${brand}'></optgroup>`);
+        $('select').on('change', setSelectedBackground);
 
-            sortOfCars[brand].forEach(car => {
-                $(`optgroup[label=${brand}]`).append(
-                    `<option value='${car.make}'>${car.make}</option>`
-                )
-            })
-        })
+        getCarsList();
+        setSelectedBackground();
+
     </script>
 </body>
 </html>
