@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create-User</title>
+   
+</head>
+<body>
+    
+
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        $.get('https://2i-js.iknsa.xyz/create-user.php')
+        .then(function(response){
+            console.log(response);
+            $('body').prepend(response);
+
+            $('form').submit(function(event){
+                event.preventDefault();
+                console.log('OK');
+
+                const data = $(this).serialize();
+
+                $.post('https://2i-js.iknsa.xyz/create-user.php', data)
+                .then(function(result){
+                    console.log(result);
+                    const backgroundColor = result.success ? 'green' : 'red';
+                    $('form').prepend(`
+                        <p style="background : ${backgroundColor}">${result.message}</p>
+                    `);
+                })
+            })
+        });
+    </script>
+</body>
+</html>
