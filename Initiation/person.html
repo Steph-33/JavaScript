@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person</title>
+   
+</head>
+<body>
+    
+
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        $.get('/person.json')
+        .then(function(response){
+            console.log(response);
+            $('body').append('<table></table>')
+            $('table').append('<thead></thead>')
+            $('table').append('<tbody></tbody>')
+
+            let head = response[0];
+            console.log('head ======> ', head);
+            Object.keys(head).forEach(title => {
+                $('thead').append(`<td>${title}</td>`)
+            });
+
+            response.forEach(person => { 
+                $('tbody').append(
+                    `<tr>
+                        <td>${person.name}</td>
+                        <td>${person.age}</td>
+                        <td>${person.cars}</td>
+                    </tr>`
+                )
+                console.log(person.name);
+            })
+        });
+    </script>
+</body>
+</html>
