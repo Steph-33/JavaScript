@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage</title>
+   
+</head>
+<body>
+    <!-- Stocker les personnes en LocalStorage -->
+    <!-- Lister les personnes dans un tableau HTML, dont la dernière colonne est une action pour modifier la ligne -->
+    <!-- Au click sur modifier, afficher un formulaire avec les données de la personne pré-rempli, et modifier la ligne en localStorage à la soumission du formulaire -->
+
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        $.get('/person.json')
+        .then(function(response){
+            response.forEach((element, index) => {
+                localStorage.setItem(index, JSON.stringify(element));
+            });
+
+            $('body').prepend('<table></table>');
+            $('table').prepend('<thead></thead>');
+            $('table').prepend('<tbody></tbody>');
+            $('body').append('<form></form>');
+
+            let head = response[0];
+            Object.keys(head).forEach(title => {
+                $('thead').append(`<td>${title}</td>`)
+            });
+
+            let persons = [];
+            for(let i = 0 ; i < response.length; i++){
+                persons.push(localStorage.getItem(JSON.parse(i)));
+            }
+            persons.forEach(person => { 
+                person.split(',');
+                personObject = JSON.parse(person);
+                console.log('personObject =======> ', personObject);
+                $('tbody').append(
+                    `<tr>
+                        <td>${personObject.name}</td>
+                        <td>${personObject.age}</td>
+                        <td>${personObject.cars.join(', ')}</td>
+                        <td><button id='${personObject.name}' class="modify">Modifier</button></td>
+                    </tr>`
+                )
+            })
+            
+            for(let i = 0 ; i < response.length ; i++){
+                $(`#${response[i].name}`).on('click', function(event){
+                    event.preventDefault();
+                    $('form').append(
+                        `<label for="name">Name</label>
+                        <input type="text" id="name" name="person_name" value="${response[i].name}">
+                        <label for="age">Age</label>
+                        <input type="text" id="age" name="person_age" value="${response[i].age}">
+                        <label for="cars">Cars</label>
+                        <input type="text" id="cars" name="person_cars" value="${response[i].cars.join(', ')}">         
+                        <input type="submit" value="submit">         
+                        `
+                    );
+                });
+            }
+            
+    
+           
+            
+            
+
+
+
+
+        });
+        
+    </script>
+</body>
+</html>
