@@ -37,20 +37,18 @@
             persons.forEach(person => { 
                 person.split(',');
                 personObject = JSON.parse(person);
-                console.log('personObject =======> ', personObject);
                 $('tbody').append(
                     `<tr>
                         <td>${personObject.name}</td>
                         <td>${personObject.age}</td>
                         <td>${personObject.cars.join(', ')}</td>
-                        <td><button id='${personObject.name}' class="modify">Modifier</button></td>
+                        <td><button id='${personObject.name}' class="modify">Edit</button></td>
                     </tr>`
                 )
             })
             
             for(let i = 0 ; i < response.length ; i++){
                 $(`#${response[i].name}`).on('click', function(event){
-                    event.preventDefault();
                     $('form').append(
                         `<label for="name">Name</label>
                         <input type="text" id="name" name="person_name" value="${response[i].name}">
@@ -63,15 +61,8 @@
                     );
                 });
             }
-            
-    
-           
-            
-            
 
-
-
-
+            // https://github.com/iknsa-formation/jquery-ajax-localstorage
         });
         
     </script>
