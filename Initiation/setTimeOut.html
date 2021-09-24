@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setTimeOut</title>
+    <style type="text/css">
+        .container{
+            width : 250px;
+            height : 250px;
+            border-radius : 125px;
+            background : coral;
+            color : whitesmoke;
+            line-height: 250px;
+            text-align: center;
+            font-size: 130px;
+        }
+    </style>
+   
+</head>
+<body>
+    <div class="container">
+        <span>12</span>
+    </div>
+
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        let counter = 10;
+        let counterTimeout;
+        
+        let displayCounter = function(){
+            $('.container span').html(counter);
+            counter--;
+
+            // if(counter >= 0){
+            // counterTimeOut = setTimeout(displayCounter, 1000);
+            // };
+            if(counter <= 0){
+                clearInterval(counterTimeout);
+            }
+        }
+
+        counterTimeout = setInterval(displayCounter, 1000);
+        displayCounter();
+
+        /**
+        * @todo Un jeu de bataille contre l'ordinateur. 
+        * 2 cartes s'affichent à l'écran, l'une est cachée car c'est celle de l'ordinateur,
+        * L'autre est visible car c'est la vôtre. 
+        * L'ordinateur joue instantanément. 
+        * Vous avez 3 secondes pour jouer. 
+        * La valeur de la carte est affichée dans la carte et elle est aléatoire, tant pour
+        * le joueur que pour l'ordinateur. 
+        * 
+        * Les cartes sont [2-10, V, D, R, A]
+        * 
+        * Ajouter un formulaire pour saisir le nom du joueur. 
+        * 
+        * Chaque partie dure 3 minutes. 
+        * Sauvegarder les parties en localStorage. 
+        * Afficher les scores dans un tableau.  
+        * 
+        */
+       
+    </script>
+</body>
+</html>
