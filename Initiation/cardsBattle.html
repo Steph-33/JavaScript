@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards' Battle</title>
+    <style type="text/css">
+        body{
+            background-color: green;
+        }
+        #computer-card{
+            width: 100px;
+            height : 150px;
+            background-image: url('./cards-back.jpg');
+            background-size: cover;
+            border-style: solid ;
+            border-color: black;
+        }
+        #my-card{
+            width: 100px;
+            height : 150px;
+            background-color: white;
+            border-style: solid ;
+            border-color: black;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        #score, #time{
+            font-weight: bold;
+        }
+        
+    </style>
+   
+</head>
+<body>
+    
+
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        /**
+        * @todo Un jeu de bataille contre l'ordinateur. 
+        * 2 cartes s'affichent à l'écran, l'une est cachée car c'est celle de l'ordinateur,
+        * L'autre est visible car c'est la vôtre. 
+        * L'ordinateur joue instantanément. 
+        * Vous avez 3 secondes pour jouer. 
+        * La valeur de la carte est affichée dans la carte et elle est aléatoire, tant pour
+        * le joueur que pour l'ordinateur. 
+        * 
+        * Les cartes sont [2-10, V, D, R, A]
+        * 
+        * Ajouter un formulaire pour saisir le nom du joueur. 
+        * 
+        * Chaque partie dure 3 minutes. 
+        * Sauvegarder les parties en localStorage. 
+        * Afficher les scores dans un tableau.  
+        * 
+        */
+        $('body').prepend(`
+            <div id="computer-card"></div>
+        `)
+
+        $('body').append(`
+            <div id="my-card"></div>
+        `)
+
+        $('body').append(`
+            <div id="score">Score : </div>
+        `)
+        $('body').append('<table></table>')
+        $('table').append('<thead></thead>')
+        $('table').append('<tbody></tbody>')
+        $('thead').append(`<td style="text-align : center">Computer</td>`)
+        $('thead').append(`<td style="text-align : center">Player</td>`)
+        $('tbody').append('<td style="text-align : center">0</td>');
+        $('tbody').append('<td style="text-align : center">0</td>');
+        $('body').append(`
+            <div id="time">Time : </div>
+        `)
+
+       
+    </script>
+</body>
+</html>
