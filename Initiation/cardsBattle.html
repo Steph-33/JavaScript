@@ -25,6 +25,9 @@
             border-color: black;
             margin-top: 30px;
             margin-bottom: 30px;
+            line-height: 150px;
+            text-align: center;
+            font-size: 50px;
         }
         #score, #time{
             font-weight: bold;
@@ -56,12 +59,39 @@
         * Afficher les scores dans un tableau.  
         * 
         */
+
+        let cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'D', 'R', 'A'];
+        let getComputerCard = cards[Math.floor(Math.random() * cards.length)];
+        let getPlayerCard = cards[Math.floor(Math.random() * cards.length)];
+        console.log('getComputerCard ==========> ',getComputerCard)
+        console.log('getPlayerCard ==========> ',getPlayerCard)
+
+        let computerScore = 0;
+        let playerScore = 0;
+        
+        if(getComputerCard > getPlayerCard){
+            computerScore += 1;
+        }
+        if(getComputerCard < getPlayerCard){
+            playerScore += 1;
+        }
+        if(getComputerCard === getPlayerCard){
+            computerScore += 0;
+            playerScore += 0;
+        }
+
+
+        console.log("computerScore ==========> ", computerScore);
+        console.log("playerScore ==========> ", playerScore);
+
+
+
         $('body').prepend(`
             <div id="computer-card"></div>
         `)
 
         $('body').append(`
-            <div id="my-card"></div>
+            <div id="my-card">${getPlayerCard}</div>
         `)
 
         $('body').append(`
@@ -72,12 +102,13 @@
         $('table').append('<tbody></tbody>')
         $('thead').append(`<td style="text-align : center">Computer</td>`)
         $('thead').append(`<td style="text-align : center">Player</td>`)
-        $('tbody').append('<td style="text-align : center">0</td>');
-        $('tbody').append('<td style="text-align : center">0</td>');
+        $('tbody').append(`<td style="text-align : center">${computerScore}</td>`);
+        $('tbody').append(`<td style="text-align : center">${playerScore}</td>`);
         $('body').append(`
             <div id="time">Time : </div>
         `)
 
+        
        
     </script>
 </body>
