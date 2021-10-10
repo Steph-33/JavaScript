@@ -68,9 +68,9 @@
 
         let computerScore = 0;
         let playerScore = 0;
-        
+           
         if(getComputerCard > getPlayerCard){
-            computerScore += 1;
+                computerScore += 1;
         }
         if(getComputerCard < getPlayerCard){
             playerScore += 1;
@@ -79,8 +79,6 @@
             computerScore += 0;
             playerScore += 0;
         }
-        console.log("computerScore ==========> ", computerScore);
-        console.log("playerScore ==========> ", playerScore);
 
         let counter = 180;
         let intervalId;
@@ -112,9 +110,31 @@
         $('table').append('<tbody></tbody>')
         $('thead').append(`<td style="text-align : center">Computer</td>`)
         $('thead').append(`<td id="player" style="text-align : center">Player</td>`)
-        $('tbody').append(`<td style="text-align : center">${computerScore}</td>`);
-        $('tbody').append(`<td style="text-align : center">${playerScore}</td>`);
-       
+        $('tbody').append(`<td id="computer-score" style="text-align : center">${computerScore}</td>`);
+        $('tbody').append(`<td id ="player-score" style="text-align : center">${playerScore}</td>`);
+
+        $('#my-card').on('click', function(event){
+            event.preventDefault();
+            console.log('event ============> ', event)
+            let newComputerCard = cards[Math.floor(Math.random() * cards.length)];
+            let newPlayerCard = cards[Math.floor(Math.random() * cards.length)];
+            console.log('newComputerCard ==========> ',newComputerCard)
+            console.log('newPlayerCard ==========> ',newPlayerCard)
+            if(newComputerCard > newPlayerCard){
+                computerScore += 1;
+            }
+            if(newComputerCard < newPlayerCard){
+                playerScore += 1;
+            }
+            if(newComputerCard === newPlayerCard){
+                computerScore += 0;
+                playerScore += 0;
+            }
+            $('#my-card').replaceWith(`<div id="my-card">${newPlayerCard}</div>`)
+            $('#computer-score').replaceWith(`<td id="computer-score" style="text-align : center">${computerScore}</td>`);
+            $('#player-score').replaceWith(`<td id ="player-score" style="text-align : center">${playerScore}</td>`);
+        });
+
         $('body').append(`
             <div id="timer"></div>
         `)
